@@ -38,8 +38,8 @@
                     <span class="login100-form-title p-t-20 p-b-45">
                         John Doe
                     </span>
-                    <div class="wrap-input100 validate-input m-b-10" data-validate="Email is required">
-                        <input class="input100" type="text" name="email" id="email" placeholder="Email">
+                    <div class="wrap-input100 validate-input m-b-10" data-validate="Username is required">
+                        <input class="input100" type="text" name="username" id="username" placeholder="Username">
                         <span class="focus-input100"></span>
                         <span class="symbol-input100">
                             <i class="fa fa-user"></i>
@@ -82,19 +82,19 @@
                 type: "POST",
                 url: '@Url.Action("Validate", "Account")',
                 data: {
-                    email: $('#email').val(),
+                    username: $('#username').val(),
                     password: $('#password').val()
                 },
                 error: function (result) {
                     alert("There is a Problem, Try Again!");
                 },
                 success: function (result) {
-                    console.log(result);
-                    if (result.status == true) {
+                    alert(result.message);
+                    if (result.status == false) {
                         window.location.href = '@Url.Action("Index", "Home")';
                     }
                     else {
-                        alert(result.message);
+                        window.location.href = '@Url.Action("About", "Home")';
                     }
                 }
             });

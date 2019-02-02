@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using esports.Models;
+﻿using esports.Models;
 using esports.Repos;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,7 +27,9 @@ namespace esports.Controllers
 
         public IActionResult Validate(LoginData data)
         {
-          return Json(new { status = false, message = "success" });
+            var user = _DbRepository.GetUser(data.Username);
+            var isValidUser = user.UserName == data.Username && user.Password == data.Password;
+          return Json(new { status = isValidUser,message = isValidUser?"success":"wrong information" });
         }
 
         public IActionResult CreateAccount(User user)
@@ -39,11 +37,5 @@ namespace esports.Controllers
             _DbRepository.AddNewUser(user);
             return Json(new { status = false, message = "success" });
         }
-    }
-
-    public class LoginData
-    {
-        public string Email { get; set; }
-        public string Password { get; set; }
     }
 }
