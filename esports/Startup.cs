@@ -26,6 +26,7 @@ namespace esports
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+            services.AddMemoryCache();
             services.AddSingleton<MainDbRepository, MainDbRepository>(
                 x => new MainDbRepository(Configuration["ConnectionStrings:MainDb"]));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

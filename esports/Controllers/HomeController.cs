@@ -5,14 +5,23 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using esports.Models;
+using esports.Repos;
 
 namespace esports.Controllers
 {
     public class HomeController : Controller
     {
+        private MainDbRepository _DbRepository;
+
+        public HomeController(MainDbRepository repository)
+        {
+            _DbRepository = repository;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            var json = _DbRepository.GetJson();
+            return View("Index", json);
         }
 
         public IActionResult About()

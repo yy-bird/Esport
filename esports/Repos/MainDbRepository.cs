@@ -1,9 +1,12 @@
-﻿using System.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using Dapper;
 using Dapper.Contrib.Extensions;
 using esports.Models;
+using Microsoft.AspNetCore.Authentication;
 
 namespace esports.Repos
 {
@@ -32,6 +35,24 @@ namespace esports.Repos
                 result=conn.Query<User>("select * from Users where username =@username",new{username}).First();
             }
             return result;
+        }
+
+        public string GetJson()
+        {
+            using (IDbConnection conn = Connection)
+            {
+                return string.Join("",
+                    conn.Query<string>("[dbo].[GetMatchesByDate]", param: new {datetime = DateTime.Today.AddDays(-1)},
+                        commandType: CommandType.StoredProcedure));
+            }
+        }
+
+        public List<T> Get<T>(string query)
+        {
+            using (IDbConnection conn = Connection)
+            {
+                return conn.Query<T>(query).ToList();
+            }
         }
     }
 }
