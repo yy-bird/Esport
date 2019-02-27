@@ -6,27 +6,29 @@
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
 
 <div id="app">
-    <div v-for="match in matches" style="margin-bottom: 10px;" class="row">
-        <div class="col-md-2">
-            <span v-bind:class="{'text-danger':match.Status==='LIVE', 'text-info':match.Status === 'NOT_STARTED'}">{{match.Status}}</span>
-        </div>
-        <div class="col-md-2">
-            <span>{{match.Tournament.Name}} <img v-if="match.Tournament.Logo" v-bind:src="'http://'+match.Tournament.Logo" style="width: 20px; height: 20px;"/></span>
-        </div>
-        <div class="col-md-3 text-right">
-            <span>{{match.Home.Name}} <img v-if="match.Home.Logo" v-bind:src="'http://'+match.Home.Logo" style="width: 20px; height: 20px;"/></span>
-        </div>
-        <div class="col-md-2">
-            <div class="row">
-                <div class="col-xs-4">{{match.Market.Odds[0].Value}}</div>
-                <div class="col-xs-4" v-if="match.Market.Odds[2]">{{match.Market.Odds[2].Value}}</div>
-                <div class="col-xs-4" v-else>-vs-</div>
-                <div class="col-xs-4" v-if="match.Market.Odds[2]">{{match.Market.Odds[2].Value}}</div>
-                <div class="col-xs-4" v-else>{{match.Market.Odds[1].Value}}</div>
+    <div v-for="match in matches" style="margin-bottom: 10px;">
+        <div class="row" v-for="market in match.Markets">
+            <div class="col-md-2">
+                <span v-bind:class="{'text-danger':match.Status==='LIVE', 'text-info':match.Status === 'NOT_STARTED'}">{{match.Status}}</span>
             </div>
-        </div>
-        <div class="col-md-3 text-left">
-            <span>{{match.Away.Name}} <img v-if="match.Home.Logo" v-bind:src="'http://'+match.Home.Logo" style="width: 20px; height: 20px;"/></span>
+            <div class="col-md-2">
+                <span>{{match.Tournament.Name}} <img v-if="match.Tournament.Logo" v-bind:src="'http://'+match.Tournament.Logo" style="width: 20px; height: 20px;"/></span>
+            </div>
+            <div class="col-md-3 text-right">
+                <span>{{match.Home.Name}} <img v-if="match.Home.Logo" v-bind:src="'http://'+match.Home.Logo" style="width: 20px; height: 20px;"/></span>
+            </div>
+            <div class="col-md-2">
+                <div class="row">
+                    <div class="col-xs-4">{{market.Odds[0].Value}}</div>
+                    <div class="col-xs-4" v-if="market.Odds[2]">{{market.Odds[2].Value}}</div>
+                    <div class="col-xs-4" v-else>-vs-</div>
+                    <div class="col-xs-4" v-if="market.Odds[2]">{{market.Odds[2].Value}}</div>
+                    <div class="col-xs-4" v-else>{{market.Odds[1].Value}}</div>
+                </div>
+            </div>
+            <div class="col-md-3 text-left">
+                <span>{{match.Away.Name}} <img v-if="match.Home.Logo" v-bind:src="'http://'+match.Home.Logo" style="width: 20px; height: 20px;"/></span>
+            </div>
         </div>
     </div>
 </div>
